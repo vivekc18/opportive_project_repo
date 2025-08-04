@@ -1,4 +1,4 @@
-# flask-chat-app
+# realtime-chatapp-flask-master
 Locally-hosted chat application built with Flask, SocketIO & MongoDB. Easy to use and modify.
 
 ## Features 
