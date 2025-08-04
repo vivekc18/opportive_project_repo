@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Edit | {{ room.name }}{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="mb-3">Edit Room</h1>
+                <div class="d-none" id="roomIdDiv">{{ room.room_id }}</div>
+                <form  id="newRoomNameForm"
+                      action="{{ url_for('chat.edit_room', room_id=room.room_id) }}" method="post">
+
+                    <div class="form-group mb-3">
+                        <label for="newRoomName">Room name</label>
+                        <input type="text" name="newRoomName" id="newRoomName" class="form-control"
+                               value="{{ room.name }}">
+                    </div>
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Kick</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for member in room_members %}
+                            <tr>
+                                <td>{{ member.username }}
+                                    {% if member.is_room_admin %}
+                                        <span class="badge text-bg-success">Admin</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if not member.is_room_admin %}
+                                        <button onclick="ajaxKickMember(this)" type="submit" name="kick_member"
+                                                data-username="{{ member.username }}"
+                                                data-room-id="{{ room.room_id }}"
+                                                class="btn btn-danger">Kick
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <button id="saveRoomName" type="submit" class="btn btn-success">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
